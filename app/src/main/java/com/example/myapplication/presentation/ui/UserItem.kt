@@ -12,11 +12,14 @@ import androidx.compose.ui.unit.dp
 import com.example.myapplication.domain.model.User
 
 @Composable
-fun UserItem(user: User) {
+fun UserItem(onItemClick: (userName: String) -> Unit, user: User) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(vertical = 4.dp)
+            .padding(vertical = 4.dp),
+        onClick = {
+            onItemClick(user.name)
+        }
     ) {
         Column(
             modifier = Modifier

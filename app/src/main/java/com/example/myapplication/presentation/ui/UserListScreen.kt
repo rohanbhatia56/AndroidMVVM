@@ -14,18 +14,23 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavController
+import androidx.navigation.NavHostController
 import com.example.myapplication.presentation.viewmodel.UserListViewModel
 
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun UserListScreen(
+    navController: NavController,
     viewModel: UserListViewModel = hiltViewModel()
 ) {
     val state by viewModel.state.collectAsState()
+    val context = LocalContext.current
 
     Scaffold(
         topBar = {
@@ -45,15 +50,20 @@ fun UserListScreen(
                         modifier = Modifier.align(Alignment.Center)
                     )
                 }
+
                 state.error.isEmpty() && state.users.isEmpty() -> {
                     ErrorView(
                         message = state.error ?: "Unknown error",
                         onRetry = { viewModel.retry() }
                     )
                 }
+
                 state.users.isNotEmpty() -> {
-                    UserList(users = state.users)
+                    UserList(users = state.users) { name->
+                        navController.navigate("UserScreen/$name")
+                    }
                 }
+
                 else -> {
                     Text(
                         text = "No users found",
