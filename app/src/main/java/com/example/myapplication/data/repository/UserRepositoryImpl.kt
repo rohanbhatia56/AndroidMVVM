@@ -23,6 +23,10 @@ class UserRepositoryImpl @Inject constructor(
         }
     }
 
+    override suspend fun sendUserText() {
+        TODO("Not yet implemented")
+    }
+
     override suspend fun refreshUsers() {
         try {
             val response =  userApi.getUsers()

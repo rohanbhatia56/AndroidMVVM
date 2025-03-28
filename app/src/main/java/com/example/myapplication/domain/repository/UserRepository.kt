@@ -5,5 +5,6 @@ import kotlinx.coroutines.flow.Flow
 
 interface UserRepository {
     fun getUsers(): Flow<List<User>>
+    suspend fun sendUserText()
     suspend fun refreshUsers()
 }

@@ -51,6 +51,10 @@ class UserListViewModel @Inject constructor(
         }
     }
 
+    fun sentText(text: String){
+
+    }
+
     fun retry() {
         loadUsers()
     }
